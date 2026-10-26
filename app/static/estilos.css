@@ -1,0 +1,306 @@
+/* Estilos base: diseño fluido, accesible y con la paleta de materias. */
+:root {
+  /* Colores de materia: cada uno tiene contraste mínimo de 3:1 contra el fondo blanco. */
+  --rojo: #c62828;
+  --naranja: #e65100;
+  --amarillo: #9a6a00;
+  --verde: #2e7d32;
+  --turquesa: #00796b;
+  --azul: #1565c0;
+  --morado: #6a1b9a;
+  --rosa: #ad1457;
+
+  --fondo: #f6f7f9;
+  --superficie: #ffffff;
+  --texto: #1c1b1f;
+  --texto-suave: #49454f;
+  --borde: #cac4d0;
+  --error: #b3261e;
+  --espacio: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  /* Evita que un texto largo sin espacios desborde la pantalla. */
+  overflow-wrap: anywhere;
+}
+
+.encabezado {
+  padding: var(--espacio);
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borde);
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+/* Una columna en celular; dos columnas desde pantallas medianas. */
+main {
+  display: grid;
+  gap: var(--espacio);
+  padding: var(--espacio);
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 48rem) {
+  main {
+    grid-template-columns: minmax(16rem, 22rem) 1fr;
+    align-items: start;
+  }
+}
+
+/* Color de la materia disponible como variable en cualquier elemento. */
+.color-rojo { --color-materia: var(--rojo); }
+.color-naranja { --color-materia: var(--naranja); }
+.color-amarillo { --color-materia: var(--amarillo); }
+.color-verde { --color-materia: var(--verde); }
+.color-turquesa { --color-materia: var(--turquesa); }
+.color-azul { --color-materia: var(--azul); }
+.color-morado { --color-materia: var(--morado); }
+.color-rosa { --color-materia: var(--rosa); }
+
+/* Foco siempre visible para quien navega con teclado. */
+:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+}
+
+/* Mensajes de error junto a cada campo. */
+.error {
+  margin: 0.25rem 0 0;
+  color: var(--error);
+  font-size: 0.9rem;
+}
+
+.error:empty {
+  display: none;
+}
+
+/* Paneles, formularios y controles (áreas táctiles de al menos 44 px). */
+.panel {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 0.75rem;
+  padding: var(--espacio);
+}
+
+.panel h2 {
+  margin: 0 0 var(--espacio);
+  font-size: 1.15rem;
+}
+
+.columna-tareas {
+  display: grid;
+  gap: var(--espacio);
+}
+
+.campo {
+  margin-bottom: 0.75rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--texto-suave);
+  border-radius: 0.5rem;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+}
+
+[aria-invalid="true"] {
+  border-color: var(--error);
+  border-width: 2px;
+}
+
+button {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--azul);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.secundario {
+  border: 1px solid var(--texto-suave);
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+button.enlace {
+  min-height: 2.75rem;
+  padding: 0 0.25rem;
+  background: none;
+  color: var(--azul);
+  text-decoration: underline;
+}
+
+.exito {
+  margin: 0.5rem 0 0;
+  color: #1b5e20;
+}
+
+.aviso {
+  color: var(--texto-suave);
+}
+
+/* Listas de materias y tareas. */
+.lista {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item-materia {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nombre-materia {
+  flex: 1;
+  min-width: 0;
+}
+
+.muestra {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--color-materia);
+}
+
+.tarjeta {
+  padding: 0.75rem var(--espacio);
+  border: 1px solid var(--borde);
+  border-left: 0.4rem solid var(--color-materia);
+  border-radius: 0.5rem;
+}
+
+.tarjeta h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.1rem 0;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+/* Filtros: en celular se apilan; desde pantallas medianas van en una fila. */
+.filtros {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: var(--espacio);
+}
+
+@media (min-width: 40rem) {
+  .filtros {
+    grid-template-columns: 1fr 1fr auto;
+    align-items: end;
+  }
+
+  .filtros .campo {
+    margin-bottom: 0;
+  }
+}
+
+.tarjeta button {
+  margin-top: 0.5rem;
+}
+
+.tarjeta.completada h3 {
+  text-decoration: line-through;
+}
+
+.tarjeta.completada {
+  opacity: 0.8;
+}
+
+.encabezado-tarjeta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.encabezado-tarjeta h3 {
+  min-width: 0;
+}
+
+/* Tareas vencidas y urgentes: fondo, borde y etiqueta con texto (no solo color). */
+.tarjeta.vencida {
+  border-color: #b3261e;
+  border-left-color: var(--color-materia);
+  background: #fdecea;
+}
+
+.tarjeta.urgente {
+  border-color: #a65b00;
+  border-left-color: var(--color-materia);
+  background: #fff3e0;
+}
+
+.etiqueta {
+  flex: none;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.etiqueta.vencida {
+  background: #b3261e;
+  color: #ffffff;
+}
+
+.etiqueta.urgente {
+  background: #7a3e00;
+  color: #ffffff;
+}
+
+.descripcion {
+  margin: 0.5rem 0 0;
+  white-space: pre-wrap;
+}
+
+/* Texto solo para lectores de pantalla. */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

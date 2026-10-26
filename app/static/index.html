@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Organizador de tareas</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <h1>Organizador de tareas</h1>
+  </header>
+
+  <main id="contenido">
+    <noscript>Esta aplicación necesita JavaScript para funcionar.</noscript>
+
+    <section class="panel" aria-labelledby="titulo-materias">
+      <h2 id="titulo-materias">Materias</h2>
+
+      <form id="form-materia" novalidate>
+        <div class="campo">
+          <label for="materia-nombre">Nombre de la materia</label>
+          <input id="materia-nombre" name="nombre" type="text" autocomplete="off"
+                 aria-describedby="error-materia-nombre">
+          <p class="error" id="error-materia-nombre" data-error-para="nombre" aria-live="polite"></p>
+        </div>
+
+        <div class="campo">
+          <label for="materia-color">Color</label>
+          <select id="materia-color" name="color" aria-describedby="error-materia-color"></select>
+          <p class="error" id="error-materia-color" data-error-para="color" aria-live="polite"></p>
+        </div>
+
+        <p class="error" data-error-general aria-live="polite"></p>
+        <button type="submit">Registrar materia</button>
+        <p class="exito" data-mensaje-exito role="status"></p>
+      </form>
+
+      <p id="vacio-materias" class="aviso">Todavía no ha registrado materias.</p>
+      <ul id="lista-materias" class="lista" aria-label="Materias registradas"></ul>
+      <p class="error" id="error-borrado" role="alert"></p>
+    </section>
+
+    <div class="columna-tareas">
+      <section class="panel" aria-labelledby="titulo-nueva-tarea">
+        <h2 id="titulo-nueva-tarea">Nueva tarea</h2>
+
+        <p id="aviso-sin-materias" class="aviso" hidden>
+          Primero registre una materia para poder crear tareas.
+          <button type="button" id="ir-a-materias" class="enlace">Registrar una materia</button>
+        </p>
+
+        <form id="form-tarea" novalidate>
+          <div class="campo">
+            <label for="tarea-materia">Materia</label>
+            <select id="tarea-materia" name="materia_id" aria-describedby="error-tarea-materia"></select>
+            <p class="error" id="error-tarea-materia" data-error-para="materia_id" aria-live="polite"></p>
+          </div>
+
+          <div class="campo">
+            <label for="tarea-titulo">Título</label>
+            <input id="tarea-titulo" name="titulo" type="text" autocomplete="off"
+                   aria-describedby="error-tarea-titulo">
+            <p class="error" id="error-tarea-titulo" data-error-para="titulo" aria-live="polite"></p>
+          </div>
+
+          <div class="campo">
+            <label for="tarea-descripcion">Descripción (opcional)</label>
+            <textarea id="tarea-descripcion" name="descripcion" rows="3"
+                      aria-describedby="error-tarea-descripcion"></textarea>
+            <p class="error" id="error-tarea-descripcion" data-error-para="descripcion" aria-live="polite"></p>
+          </div>
+
+          <div class="campo">
+            <label for="tarea-fecha">Fecha y hora de entrega</label>
+            <input id="tarea-fecha" name="fecha_entrega" type="datetime-local"
+                   aria-describedby="error-tarea-fecha">
+            <p class="error" id="error-tarea-fecha" data-error-para="fecha_entrega" aria-live="polite"></p>
+          </div>
+
+          <p class="error" data-error-general aria-live="polite"></p>
+          <button type="submit">Guardar tarea</button>
+          <p class="exito" data-mensaje-exito role="status"></p>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="titulo-tareas">
+        <h2 id="titulo-tareas">Tareas</h2>
+
+        <form id="form-filtros" class="filtros">
+          <div class="campo">
+            <label for="filtro-materia">Filtrar por materia</label>
+            <select id="filtro-materia" name="materia"></select>
+          </div>
+          <div class="campo">
+            <label for="filtro-estado">Filtrar por estado</label>
+            <select id="filtro-estado" name="estado">
+              <option value="">Todos</option>
+              <option value="pendiente">Pendientes</option>
+              <option value="completada">Completadas</option>
+            </select>
+          </div>
+          <button type="button" id="quitar-filtros" class="secundario">Quitar filtros</button>
+        </form>
+
+        <p id="vacio-tareas" class="aviso" hidden>Aún no tiene tareas. Cree la primera con el formulario.</p>
+        <p id="sin-resultados" class="aviso" hidden>Ninguna tarea coincide con los filtros elegidos.</p>
+        <ul id="lista-tareas" class="lista" aria-label="Lista de tareas"></ul>
+        <p class="error" id="error-listado" role="alert"></p>
+      </section>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

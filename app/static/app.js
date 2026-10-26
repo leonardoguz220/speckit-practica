@@ -218,7 +218,7 @@ async function borrarMateria(id) {
 
 const ETIQUETAS_ALERTA = { vencida: "Vencida", urgente: "Urgente" };
 
-function crearTarjetaTarea(tarea) {
+function clasesDeTarjeta(tarea) {
   const clases = ["tarjeta", `color-${tarea.materia.color}`];
   if (tarea.alerta) {
     clases.push(tarea.alerta);
@@ -226,32 +226,49 @@ function crearTarjetaTarea(tarea) {
   if (tarea.completada) {
     clases.push("completada");
   }
-  const tarjeta = crearElemento("li", undefined, clases.join(" "));
+  return clases.join(" ");
+}
 
+/** Título de la tarea con su etiqueta "Vencida" o "Urgente", si la tiene. */
+function crearEncabezadoTarea(tarea) {
   const encabezado = crearElemento("div", undefined, "encabezado-tarjeta");
   encabezado.append(crearElemento("h3", tarea.titulo));
   if (tarea.alerta) {
     // El texto de la etiqueta hace que la alerta no dependa solo del color.
     encabezado.append(crearElemento("span", ETIQUETAS_ALERTA[tarea.alerta], `etiqueta ${tarea.alerta}`));
   }
-  tarjeta.append(encabezado);
+  return encabezado;
+}
 
+/** Materia (color y nombre), fecha de entrega, estado y descripción opcional. */
+function crearDatosTarea(tarea) {
   const materia = crearElemento("p", undefined, "meta");
   materia.append(crearMuestraDeColor(tarea.materia.color), crearElemento("span", tarea.materia.nombre));
-  tarjeta.append(materia);
 
-  tarjeta.append(crearElemento("p", `Entrega: ${formatearFecha(tarea.fecha_entrega)}`, "meta"));
-  tarjeta.append(crearElemento("p", tarea.completada ? "Completada" : "Pendiente", "meta"));
+  const datos = [
+    materia,
+    crearElemento("p", `Entrega: ${formatearFecha(tarea.fecha_entrega)}`, "meta"),
+    crearElemento("p", tarea.completada ? "Completada" : "Pendiente", "meta"),
+  ];
   if (tarea.descripcion) {
-    tarjeta.append(crearElemento("p", tarea.descripcion, "descripcion"));
+    datos.push(crearElemento("p", tarea.descripcion, "descripcion"));
   }
+  return datos;
+}
 
+/** Botón que marca la tarea como completada o la devuelve a pendiente. */
+function crearBotonEstado(tarea) {
   const textoBoton = tarea.completada ? "Marcar como pendiente" : "Marcar como completada";
   const boton = crearElemento("button", textoBoton, "secundario");
   boton.type = "button";
   boton.setAttribute("aria-label", `${textoBoton}: ${tarea.titulo}`);
   boton.addEventListener("click", () => cambiarEstadoDeTarea(tarea));
-  tarjeta.append(boton);
+  return boton;
+}
+
+function crearTarjetaTarea(tarea) {
+  const tarjeta = crearElemento("li", undefined, clasesDeTarjeta(tarea));
+  tarjeta.append(crearEncabezadoTarea(tarea), ...crearDatosTarea(tarea), crearBotonEstado(tarea));
   return tarjeta;
 }
 

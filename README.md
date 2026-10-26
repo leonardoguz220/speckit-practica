@@ -58,3 +58,7 @@ specs/          especificación, plan y tareas de la funcionalidad (Spec Kit)
 ```
 
 La guía de validación manual está en `specs/001-organizador-tareas/quickstart.md`.
+
+## Trabajo en equipo
+
+Para repartir tareas y evitar conflictos, lea [CONTRIBUTING.md](CONTRIBUTING.md).
